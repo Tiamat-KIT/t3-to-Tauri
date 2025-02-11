@@ -36,8 +36,8 @@ export default async function Home() {
 
           {session?.user && <LatestPost />}
         </div>
-        <dialog open className="bg-white/30 rounded-lg border-black fix top-5 left-5 p-5">
-          <input type="file" />
+        <dialog open className="bg-white/50 rounded-lg border-black fix top-5 left-5 p-5">
+          <input type="file" alt="ファイルを入れてください"/>
         </dialog>
       </main>
     </HydrateClient>

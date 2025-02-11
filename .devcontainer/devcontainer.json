@@ -18,7 +18,8 @@
 			]
 		}
 	},
-	"forwardPorts": [3000]
+	"forwardPorts": [3000],
+	"postStartCommand": "npm i && npm run db:generate"
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},

@@ -13,6 +13,7 @@ const config = {
         config.config.watchOptions = {
             pollIntervalMs: 3000
         }
+        return config
     }
 };
 

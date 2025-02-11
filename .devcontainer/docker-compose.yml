@@ -5,8 +5,13 @@ services:
       dockerfile: Dockerfile
 
     volumes:
-      - ../workspace:/workspace:cached
-    environment: 
+        - ../workspace:/workspace:cached
+        - node_modules:/workspace/node_modules
+        - /workspace/.next
+        - /workspace/.turbo
+        - /workspace/dist
+        - /workspace/prisma/client
+    environment:
       - WATCHPACK_POLLING=true
     # Overrides default command so things don't shut down after the process ends.
     command: sleep infinity
@@ -19,16 +24,28 @@ services:
 
   db:
     image: postgres:latest
-    restart: unless-stopped
+    restart: always
     volumes:
-      - postgres-data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: postgres
-      POSTGRES_USER: postgres
-      POSTGRES_DB: postgres
-
+      POSTGRES_USER: utakata
+      POSTGRES_DB: mydb
+    ports: 
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U prisma -d postgres"]
+      interval: 5s
+      timeout: 2s
+      retries: 20
+    command: postgres -c listen_addresses='*'
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
     # Add "forwardPorts": ["5432"] to **devcontainer.json** to forward PostgreSQL locally.
     # (Adding the "ports" property to this file will not forward from a Codespace.)
 
 volumes:
-  postgres-data:
+  postgres_data:
+  node_modules:
