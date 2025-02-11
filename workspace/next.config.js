@@ -7,13 +7,7 @@ import "./src/env.js";
 /** @type {import("next").NextConfig} */
 const config = {
     watchOptions: {
-        pollIntervalMs: 3000
-    },
-    webpack: (_,config) => {
-        config.config.watchOptions = {
-            pollIntervalMs: 3000
-        }
-        return config
+        pollIntervalMs: 1000
     }
 };
 

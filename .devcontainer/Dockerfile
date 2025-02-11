@@ -10,3 +10,10 @@ FROM mcr.microsoft.com/devcontainers/javascript-node:1-22-bookworm
 
 # [Optional] Uncomment if you want to install more global node modules
 # RUN su node -c "npm install -g <your-package-list-here>"
+USER node
+WORKDIR /home/node/workspace
+
+RUN mkdir -p node_modules
+
+# これにRustのインストールを追加すれば
+# Tauriの開発環境が整う

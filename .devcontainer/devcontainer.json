@@ -1,35 +1,45 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/javascript-node-postgres
 {
-	"name": "Node.js & PostgreSQL",
-	"dockerComposeFile": "docker-compose.yml",
-	"service": "app",
-	"workspaceFolder": "/workspace",
-	"customizations": {
-		"vscode": {
-			"extensions": [
-				"naumovs.color-highlight",
-				"bierner.color-info",
-				"anseki.vscode-color"
-			]
-		}
-	},
-	"forwardPorts": [3000],
-	"postStartCommand": "npm i && npm run db:generate"
-
-	// Features to add to the dev container. More info: https://containers.dev/features.
-	// "features": {},
-
-	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// This can be used to network with other containers or with the host.
-	// "forwardPorts": [3000, 5432],
-
-	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "yarn install",
-
-	// Configure tool-specific properties.
-	// "customizations": {},
-
-	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
-	// "remoteUser": "root"
+  "name": "Node.js & PostgreSQL",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/home/node/workspace",
+  "init": true,
+  "initializeCommand": "rm -rf ./workspace/node_modules && rm -rf ./workspace/package-lock.json && rm -rf ./workspace/.next",
+  "postStartCommand": "npm install && npm run db:generate",
+  "forwardPorts": [3000],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "ms-azuretools.vscode-docker",
+        "ms-vscode.vscode-typescript-tslint-plugin",
+        "ms-vscode.vscode-typescript-next",
+        "ms-vscode.vscode-typescript-node-essentials",
+        "ms-vscode.vscode-typescript-template",
+        "ms-vscode.vscode-typescript"
+      ],
+      "settings": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+          "source.fixAll.eslint": true
+        },
+        "eslint.validate": [
+          "javascript",
+          "javascriptreact",
+          "typescript",
+          "typescriptreact"
+        ],
+        "typescript.tsdk": "/usr/local/lib/node_modules/typescript/lib",
+        "typescript.tscPath": "/usr/local/lib/node_modules/typescript/lib/tsc"
+      }
+    }
+  },
+  "containerEnv": {
+    "WATCHPACK_POLLING": "true"
+  },
+  "remoteUser": "node"
 }

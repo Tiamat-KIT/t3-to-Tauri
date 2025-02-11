@@ -3,6 +3,7 @@ import Link from "next/link";
 import { LatestPost } from "~/app/_components/post";
 import { auth } from "~/server/auth";
 import { api, HydrateClient } from "~/trpc/server";
+import InputModal from "./_components/InputModal";
 
 export default async function Home() {
   const hello = await api.post.hello({ text: "from tRPC" });
@@ -36,9 +37,7 @@ export default async function Home() {
 
           {session?.user && <LatestPost />}
         </div>
-        <dialog open className="bg-white/50 rounded-lg border-black fix top-5 left-5 p-5">
-          <input type="file" alt="ファイルを入れてください"/>
-        </dialog>
+        <InputModal />
       </main>
     </HydrateClient>
   );
