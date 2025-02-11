@@ -1,32 +1,35 @@
+version: '3.8'
+
 services:
   app:
-    build:
+    build: 
       context: .
       dockerfile: Dockerfile
 
     volumes:
-        - ../workspace:/workspace:cached
-        - node_modules:/workspace/node_modules
-        - /workspace/.next
-        - /workspace/.turbo
-        - /workspace/dist
-        - /workspace/prisma/client
+      - ../workspace:/workspace:cached
+      - node_modules:/workspace/node_modules
+      - /workspace/.next
+      - /workspace/.turbo
+      - /workspace/dist
+      - /workspace/prisma/client
     environment:
       - WATCHPACK_POLLING=true
+      
     # Overrides default command so things don't shut down after the process ends.
     command: sleep infinity
 
     # Runs app on the same network as the database container, allows "forwardPorts" in devcontainer.json function.
     network_mode: service:db
 
-    # Use "forwardPorts" in **devcontainer.json** to forward an app port locally.
+    # Use "forwardPorts" in **devcontainer.json** to forward an app port locally. 
     # (Adding the "ports" property to this file will not forward from a Codespace.)
 
   db:
     image: postgres:latest
-    restart: always
+    restart: unless-stopped
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres-data:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: utakata
@@ -43,9 +46,10 @@ services:
       options:
         max-size: "10m"
         max-file: "3"
+
     # Add "forwardPorts": ["5432"] to **devcontainer.json** to forward PostgreSQL locally.
     # (Adding the "ports" property to this file will not forward from a Codespace.)
 
 volumes:
-  postgres_data:
+  postgres-data:
   node_modules:
